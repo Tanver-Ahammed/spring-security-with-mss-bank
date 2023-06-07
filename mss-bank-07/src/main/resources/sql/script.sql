@@ -4,9 +4,9 @@ use mss_bank;
 
 # drop table `users`;
 # drop table `authorities`;
-# drop table `customer`;
+# drop table `customers`;
 
-CREATE TABLE `customer`
+CREATE TABLE `customers`
 (
     `customer_id`   int          NOT NULL AUTO_INCREMENT,
     `name`          varchar(100) NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE `accounts`
     `create_dt`      date DEFAULT NULL,
     PRIMARY KEY (`account_number`),
     KEY `customer_id` (`customer_id`),
-    CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON DELETE CASCADE
+    CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`) ON DELETE CASCADE
 );
 
 CREATE TABLE `account_transactions`
@@ -45,7 +45,7 @@ CREATE TABLE `account_transactions`
     KEY `customer_id` (`customer_id`),
     KEY `account_number` (`account_number`),
     CONSTRAINT `accounts_ibfk_2` FOREIGN KEY (`account_number`) REFERENCES `accounts` (`account_number`) ON DELETE CASCADE,
-    CONSTRAINT `acct_user_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON DELETE CASCADE
+    CONSTRAINT `acct_user_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`) ON DELETE CASCADE
 );
 
 
@@ -62,7 +62,7 @@ CREATE TABLE `loans`
     `create_dt`          date DEFAULT NULL,
     PRIMARY KEY (`loan_number`),
     KEY `customer_id` (`customer_id`),
-    CONSTRAINT `loan_customer_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON DELETE CASCADE
+    CONSTRAINT `loan_customer_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`) ON DELETE CASCADE
 );
 
 CREATE TABLE `cards`
@@ -77,7 +77,7 @@ CREATE TABLE `cards`
     `create_dt`        date DEFAULT NULL,
     PRIMARY KEY (`card_id`),
     KEY `customer_id` (`customer_id`),
-    CONSTRAINT `card_customer_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON DELETE CASCADE
+    CONSTRAINT `card_customer_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`) ON DELETE CASCADE
 );
 
 CREATE TABLE `notice_details`
@@ -105,11 +105,11 @@ CREATE TABLE `contact_messages`
 
 
 
-INSERT INTO `Customer` (`name`, `email`, `mobile_number`, `pwd`, `role`, `create_dt`)
+INSERT INTO `customers` (`name`, `email`, `mobile_number`, `pwd`, `role`, `create_dt`)
 VALUES ('Happy', 'happy@example.com', '9876548337', '$2y$12$oRRbkNfwuR8ug4MlzH5FOeui.//1mkd.RsOAJMbykTSupVy.x/vb2',
         'admin', CURDATE());
 
-INSERT INTO `Accounts` (`customer_id`, `account_number`, `account_type`, `branch_address`, `create_dt`)
+INSERT INTO `accounts` (`customer_id`, `account_number`, `account_type`, `branch_address`, `create_dt`)
 VALUES (1, 1865764534, 'Savings', '123 Main Street, New York', CURDATE());
 
 
@@ -145,7 +145,6 @@ VALUES (UUID(), 1865764534, 1, '2023-02-23', 'Amazon.com', 'Withdrawal', 100, 34
 
 
 
-
 INSERT INTO `loans` (`customer_id`, `start_dt`, `loan_type`, `total_loan`, `amount_paid`, `outstanding_amount`,
                      `create_dt`)
 VALUES (1, '2020-10-13', 'Home', 200000, 50000, 150000, '2020-10-13');
@@ -164,7 +163,6 @@ VALUES (1, '2018-02-14', 'Personal', 10000, 3500, 6500, '2018-02-14');
 
 
 
-
 INSERT INTO `cards` (`card_number`, `customer_id`, `card_type`, `total_limit`, `amount_used`, `available_amount`,
                      `create_dt`)
 VALUES ('4565XXXX4656', 1, 'Credit', 10000, 500, 9500, CURDATE());
@@ -176,7 +174,6 @@ VALUES ('3455XXXX8673', 1, 'Credit', 7500, 600, 6900, CURDATE());
 INSERT INTO `cards` (`card_number`, `customer_id`, `card_type`, `total_limit`, `amount_used`, `available_amount`,
                      `create_dt`)
 VALUES ('2359XXXX9346', 1, 'Credit', 20000, 4000, 16000, CURDATE());
-
 
 
 
@@ -215,3 +212,35 @@ INSERT INTO `notice_details` (`notice_summary`, `notice_details`, `notic_beg_dt`
 VALUES ('COVID-19 Insurance',
         'EazyBank launched an insurance policy which will cover COVID-19 expenses. Please reach out to the branch for more details',
         CURDATE() - INTERVAL 30 DAY, CURDATE() + INTERVAL 30 DAY, CURDATE(), null);
+
+
+CREATE TABLE `authorities`
+(
+    `id`          int         NOT NULL AUTO_INCREMENT,
+    `customer_id` int         NOT NULL,
+    `name`        varchar(50) NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `customer_id` (`customer_id`),
+    CONSTRAINT `authorities_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`)
+);
+
+INSERT INTO `authorities` (`customer_id`, `name`)
+VALUES (1, 'VIEWACCOUNT');
+
+INSERT INTO `authorities` (`customer_id`, `name`)
+VALUES (1, 'VIEWCARDS');
+
+INSERT INTO `authorities` (`customer_id`, `name`)
+VALUES (1, 'VIEWLOANS');
+
+INSERT INTO `authorities` (`customer_id`, `name`)
+VALUES (1, 'VIEWBALANCE');
+
+DELETE
+FROM `authorities`;
+
+INSERT INTO `authorities` (`customer_id`, `name`)
+VALUES (1, 'ROLE_USER');
+
+INSERT INTO `authorities` (`customer_id`, `name`)
+VALUES (1, 'ROLE_ADMIN');

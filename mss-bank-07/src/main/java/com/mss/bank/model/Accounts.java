@@ -4,8 +4,10 @@ package com.mss.bank.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "accounts")
 public class Accounts {
 
 	@Column(name = "customer_id")

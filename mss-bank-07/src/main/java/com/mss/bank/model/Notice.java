@@ -9,83 +9,83 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "notice_details")
 public class Notice {
 
-	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO,generator="native")
-	@GenericGenerator(name = "native",strategy = "native")
-	@Column(name = "notice_id")
-	private int noticeId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
+    @Column(name = "notice_id")
+    private int noticeId;
 
-	@Column(name = "notice_summary")
-	private String noticeSummary;
+    @Column(name = "notice_summary")
+    private String noticeSummary;
 
-	@Column(name = "notice_details")
-	private String noticeDetails;
+    @Column(name = "notice_details")
+    private String noticeDetails;
 
-	@Column(name = "notic_beg_dt")
-	private Date noticBegDt;
-	
-	@Column(name = "notic_end_dt")
-	private Date noticEndDt;
-	
-	@Column(name = "create_dt")
-	private Date createDt;
-	
-	@Column(name = "update_dt")
-	private Date updateDt;
+    @Column(name = "notic_beg_dt")
+    private Date noticBegDt;
 
-	public int getNoticeId() {
-		return noticeId;
-	}
+    @Column(name = "notic_end_dt")
+    private Date noticEndDt;
 
-	public void setNoticeId(int noticeId) {
-		this.noticeId = noticeId;
-	}
+    @Column(name = "create_dt")
+    private Date createDt;
 
-	public String getNoticeSummary() {
-		return noticeSummary;
-	}
+    @Column(name = "update_dt")
+    private Date updateDt;
 
-	public void setNoticeSummary(String noticeSummary) {
-		this.noticeSummary = noticeSummary;
-	}
+    public int getNoticeId() {
+        return noticeId;
+    }
 
-	public String getNoticeDetails() {
-		return noticeDetails;
-	}
+    public void setNoticeId(int noticeId) {
+        this.noticeId = noticeId;
+    }
 
-	public void setNoticeDetails(String noticeDetails) {
-		this.noticeDetails = noticeDetails;
-	}
+    public String getNoticeSummary() {
+        return noticeSummary;
+    }
 
-	public Date getNoticBegDt() {
-		return noticBegDt;
-	}
+    public void setNoticeSummary(String noticeSummary) {
+        this.noticeSummary = noticeSummary;
+    }
 
-	public void setNoticBegDt(Date noticBegDt) {
-		this.noticBegDt = noticBegDt;
-	}
+    public String getNoticeDetails() {
+        return noticeDetails;
+    }
 
-	public Date getNoticEndDt() {
-		return noticEndDt;
-	}
+    public void setNoticeDetails(String noticeDetails) {
+        this.noticeDetails = noticeDetails;
+    }
 
-	public void setNoticEndDt(Date noticEndDt) {
-		this.noticEndDt = noticEndDt;
-	}
+    public Date getNoticBegDt() {
+        return noticBegDt;
+    }
 
-	public Date getCreateDt() {
-		return createDt;
-	}
+    public void setNoticBegDt(Date noticBegDt) {
+        this.noticBegDt = noticBegDt;
+    }
 
-	public void setCreateDt(Date createDt) {
-		this.createDt = createDt;
-	}
+    public Date getNoticEndDt() {
+        return noticEndDt;
+    }
 
-	public Date getUpdateDt() {
-		return updateDt;
-	}
+    public void setNoticEndDt(Date noticEndDt) {
+        this.noticEndDt = noticEndDt;
+    }
 
-	public void setUpdateDt(Date updateDt) {
-		this.updateDt = updateDt;
-	}	
+    public Date getCreateDt() {
+        return createDt;
+    }
+
+    public void setCreateDt(Date createDt) {
+        this.createDt = createDt;
+    }
+
+    public Date getUpdateDt() {
+        return updateDt;
+    }
+
+    public void setUpdateDt(Date updateDt) {
+        this.updateDt = updateDt;
+    }
 }

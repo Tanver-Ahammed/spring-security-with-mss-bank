@@ -1,5 +1,6 @@
 package com.mss.bank.config;
 
+import com.mss.bank.model.Authority;
 import com.mss.bank.model.Customer;
 import com.mss.bank.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class MssBankUsernamePasswordAuthenticationProvider implements AuthenticationProvider {
@@ -32,13 +34,19 @@ public class MssBankUsernamePasswordAuthenticationProvider implements Authentica
         List<Customer> customers = this.customerRepository.findByEmail(username);
         if (customers.size() > 0) {
             if (passwordEncoder.matches(password, customers.get(0).getPwd())) {
-                List<GrantedAuthority> authorities = new ArrayList<>();
-                authorities.add(new SimpleGrantedAuthority(customers.get(0).getRole()));
-                return new UsernamePasswordAuthenticationToken(username, password, authorities);
+                return new UsernamePasswordAuthenticationToken(username, password, getGrantedAuthorities(customers.get(0).getAuthorities()));
             } else
                 throw new BadCredentialsException("Invalid Password!!");
         } else
             throw new BadCredentialsException("No User Registered with this Username and Password!!");
+    }
+
+    private List<GrantedAuthority> getGrantedAuthorities(Set<Authority> authorities) {
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        for (Authority authority : authorities) {
+            grantedAuthorities.add(new SimpleGrantedAuthority(authority.getName()));
+        }
+        return grantedAuthorities;
     }
 
     @Override
