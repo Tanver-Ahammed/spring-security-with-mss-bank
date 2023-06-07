@@ -1,0 +1,43 @@
+### get
+GET http://localhost:8080/notices
+Accept: application/json
+
+###
+GET http://localhost:8080/contact
+Accept: application/json
+
+###
+GET http://localhost:8080/welcome
+Accept: application/json
+
+### authenticated
+GET http://localhost:8080/myAccount
+Accept: application/json
+Authorization: Basic tanver@gmail.com 12345
+
+### authenticated
+GET http://localhost:8080/myBalance
+Accept: application/json
+Authorization: Basic tanver@gmail.com 12345
+
+### authenticated
+GET http://localhost:8080/myCards
+Accept: application/json
+Authorization: Basic tanver@gmail.com 12345
+
+### authenticated
+GET http://localhost:8080/myLoans
+Accept: application/json
+Authorization: Basic tanver@gmail.com 12345
+
+###
+POST http://localhost:8080/register
+Content-Type: application/json
+
+{
+  "name": "Aminul Bari",
+  "email": "aminul@gmail.com",
+  "mobileNumber": "0570-65161",
+  "pwd": "12345",
+  "role": "user"
+}
